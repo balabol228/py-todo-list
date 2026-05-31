@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Видалити тег</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="text-slate-100 min-h-screen flex items-center justify-center p-6">
+
+    <div class="glass-effect w-full max-w-md rounded-2xl p-8 shadow-2xl text-center">
+        
+        <div class="w-16 h-16 bg-rose-500/10 border border-rose-500/30 rounded-full flex items-center justify-center mx-auto mb-4 text-rose-400 text-2xl">
+            ⚠️
+        </div>
+
+        <h1 class="text-xl font-bold text-slate-100 mb-2">Видалення тегу</h1>
+        <p class="text-sm text-slate-400 mb-6">
+            Ви дійсно хочете видалити тег <span class="text-rose-400 font-semibold">"{{ object.name }}"</span>? Цю дію не можна буде скасувати.
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="flex gap-3">
+                <button type="submit" 
+                        class="flex-1 bg-rose-600 hover:bg-rose-500 text-white font-medium py-3 rounded-xl text-sm transition-all shadow-lg shadow-rose-600/20 active:scale-95">
+                    Так, видалити
+                </button>
+                <a href="{% url 'todo:tag-list' %}" 
+                   class="flex-1 bg-slate-800 hover:bg-slate-700 text-slate-300 text-center font-medium py-3 rounded-xl text-sm transition-colors border border-slate-700/60 flex items-center justify-center">
+                    Скасувати
+                </a>
+            </div>
+        </form>
+
+    </div>
+
+</body>
+</html>

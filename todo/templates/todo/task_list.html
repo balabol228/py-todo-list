@@ -1,0 +1,76 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}Головна — Список завдань{% endblock %}
+
+{% block content %}
+<div class="glass-effect rounded-2xl p-6 md:p-8 shadow-2xl">
+    
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                Мої завдання
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Керуй своїм часом ефективно</p>
+        </div>
+        <a href="{% url 'todo:task-create' %}" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+            + Створити завдання
+        </a>
+    </div>
+
+    <div class="space-y-4">
+        {% for task in tasks %}
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-slate-950/40 border {% if task.is_done %}border-emerald-500/20 bg-emerald-950/5{% else %}border-slate-800/60 hover:border-slate-700{% endif %} rounded-xl transition-all group gap-4">
+                
+                <div class="space-y-1.5 flex-1">
+                    <div class="flex items-start gap-3">
+                        <span class="w-2.5 h-2.5 rounded-full mt-1.5 shrink-0 {% if task.is_done %}bg-emerald-500 shadow-lg shadow-emerald-500/50{% else %}bg-indigo-500 shadow-lg shadow-indigo-500/50{% endif %}"></span>
+                        <div>
+                            <p class="text-sm font-medium transition-colors {% if task.is_done %}text-slate-500 line-through{% else %}text-slate-200{% endif %}">
+                                {{ task.content }}
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-500 mt-1">
+                                <span>Створено: {{ task.created_at|date:"d.m.Y H:i" }}</span>
+                                {% if task.deadline %}
+                                    <span class="{% if not task.is_done %}text-rose-400/80 font-medium{% endif %}">
+                                        ⏰ Дедлайн: {{ task.deadline|date:"d.m.Y H:i" }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if task.tags.all %}
+                        <div class="flex flex-wrap gap-1.5 pl-5 pt-1">
+                            {% for tag in task.tags.all %}
+                                <span class="text-[10px] px-2 py-0.5 rounded-md bg-slate-800 text-cyan-400 border border-slate-700/50 font-medium">
+                                    {{ tag.name }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="flex items-center gap-3 sm:justify-end shrink-0">
+                    <form action="{% url 'todo:task-toggle-status' task.pk %}" method="POST" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="text-xs font-semibold px-3 py-1.5 rounded-lg transition-all border {% if task.is_done %}bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700{% else %}bg-emerald-600/20 text-emerald-400 border-emerald-500/30 hover:bg-emerald-600 hover:text-white{% endif %}">
+                            {% if task.is_done %}Undo{% else %}Complete{% endif %}
+                        </button>
+                    </form>
+
+                    <a href="{% url 'todo:task-update' task.pk %}" class="text-xs text-slate-400 hover:text-indigo-400 transition-colors">
+                        Редагувати
+                    </a>
+                    <a href="{% url 'todo:task-delete' task.pk %}" class="text-xs text-slate-500 hover:text-rose-400 transition-colors">
+                        Видалити
+                    </a>
+                </div>
+
+            </div>
+        {% empty %}
+            <p class="text-center text-sm text-slate-500 py-8">На сьогодні завдань немає. Відпочивай! 😎</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'todo/base.html' %}
+
+{% block title %}Керування тегами{% endblock %}
+
+{% block content %}
+<div class="glass-effect rounded-2xl p-6 md:p-8 shadow-2xl">
+    
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-extrabold bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text text-transparent">
+                Управління тегами
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">Класифікуй свої завдання за категоріями</p>
+        </div>
+        <a href="{% url 'todo:tag-create' %}" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+            + Додати новий тег
+        </a>
+    </div>
+
+    <div class="overflow-hidden border border-slate-800/60 rounded-xl bg-slate-950/20">
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="border-b border-slate-800 bg-slate-950/40 text-slate-400 text-xs uppercase tracking-wider font-semibold">
+                    <th class="p-4">Назва тегу</th>
+                    <th class="p-4 text-right">Дії</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800/50 text-sm">
+                {% for tag in tags %}
+                    <tr class="hover:bg-slate-900/30 transition-colors group">
+                        <td class="p-4 font-medium text-slate-200 group-hover:text-cyan-400 transition-colors">
+                            🏷️ {{ tag.name }}
+                        </td>
+                        <td class="p-4 text-right space-x-4">
+                            <a href="{% url 'todo:tag-update' tag.pk %}" class="text-xs text-slate-400 hover:text-indigo-400 transition-colors">
+                                Редагувати
+                            </a>
+                            <a href="{% url 'todo:tag-delete' tag.pk %}" class="text-xs text-slate-500 hover:text-rose-400 transition-colors">
+                                Видалити
+                            </a>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="2" class="p-8 text-center text-sm text-slate-500">
+                            Теги ще не створені. Додай перший! 🏷️
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}
