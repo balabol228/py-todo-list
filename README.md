@@ -1,22 +1,15 @@
 # Todo List Application
 
-Веб-додаток для керування щоденними завданнями та тегами, побудований на Django з використанням Class-Based Views та стилізований за допомогою Tailwind CSS (Glassmorphism Dark UI).
+A simple task management application built with Django.
 
-## Функціонал
-* Створення, редагування та видалення завдань
-* Маркування завдань як виконаних в один клік (Toggle)
-* Прив'язка тегів до завдань
-* Повний CRUD для тегів
-* Адаптивний преміум-дизайн із темною темою
+## Features
+- Task management (CRUD operations)
+- Tagging system
+- Responsive design using Tailwind CSS
+- Dark UI with Glassmorphism
 
-## Стек технологій
-* Python
-* Django ORM / CBV
-* Tailwind CSS
-
-## Як запустити локально:
-1. Клонувати репозиторій: `git clone <посилання_на_твій_репо>`
-2. Створити віртуальне оточення: `python -m venv venv`
-3. Активувати його та встановити залежності: `pip install -r requirements.txt`
-4. Запустити міграції: `python manage.py migrate`
-5. Запустити сервер: `python manage.py runserver`
+## How to run
+1. Clone the repository.
+2. Install requirements: `pip install -r requirements.txt`
+3. Run migrations: `python manage.py migrate`
+4. Start the server: `python manage.py runserver`
